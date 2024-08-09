@@ -22,11 +22,13 @@ public class FutureProximityAdjuster implements TimePointAdjuster {
         TimePoint tpFound = new PlusTimePointAdjuster(1, TimeUnit.SECOND).adjust(timePoint);
         int index = Arrays.binarySearch(timePoints, tpFound, Comparable::compareTo);
 
-        if (index < 0 && (index + 1) * (-1) <= timePoints.length - 1) {
-            index = (index + 1) * (-1);
+        if (-index <= timePoints.length) {
+            index = -(index + 1);
         }
 
         return index < 0 ? null : timePoints[index];
+
+
     }
 
 }
