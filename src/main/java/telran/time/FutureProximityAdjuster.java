@@ -45,7 +45,8 @@ public class FutureProximityAdjuster implements TimePointAdjuster {
             middleIndex = (first + last) / 2;
         }
 
-        return first > last ? -(first + 1) : middleIndex;
+        return -(first + 1);
+      
 
     }
 
