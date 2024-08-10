@@ -52,7 +52,8 @@ public class TimePointUnitTest {
     void FutureProximityAdjusterTest() {
         TimePoint tpSecond1 = new TimePoint(120, TimeUnit.SECOND); // 120
         TimePoint tpSecond3 = new TimePoint(10000, TimeUnit.SECOND); // 10 000
-        TimePoint tpSecond2 = new TimePoint(600, TimeUnit.SECOND); // 600 
+        TimePoint tpSecond2 = new TimePoint(600, TimeUnit.SECOND); // 600
+        TimePoint tpSecond4 = new TimePoint(601, TimeUnit.SECOND); // 601 
         TimePoint tpMinute1 = new TimePoint(1, TimeUnit.MINUTE); // 60
         TimePoint tpMinute3 = new TimePoint(340, TimeUnit.MINUTE); // 20 400
         TimePoint tpMinute2 = new TimePoint(72, TimeUnit.MINUTE); // 4 320
@@ -63,8 +64,8 @@ public class TimePointUnitTest {
         TimePoint tpHour3 = new TimePoint(3, TimeUnit.HOUR); // 10 800
         TimePoint tpHour2 = new TimePoint(2, TimeUnit.HOUR); // 7 200
         
-        TimePoint[] timePoints = {tpSecond1, tpSecond2, tpSecond3, tpMinute1, tpMinute2, tpMinute3, tpHour1, tpHour2, tpHour3, tpMinute4, tpMinute5, tpMinute6};
-        TimePoint[] timePointsSort = {tpMinute1, tpSecond1, tpMinute4, tpMinute5, tpSecond2, tpMinute6, tpHour1, tpMinute2, tpHour2, tpSecond3, tpHour3, tpMinute3};
+        TimePoint[] timePoints = {tpSecond1, tpSecond2, tpSecond3, tpMinute1, tpMinute2, tpMinute3, tpHour1, tpHour2, tpHour3, tpMinute4, tpMinute5, tpMinute6, tpSecond4};
+        TimePoint[] timePointsSort = {tpMinute1, tpSecond1, tpMinute4, tpMinute5, tpSecond2, tpMinute6, tpSecond4, tpHour1, tpMinute2, tpHour2, tpSecond3, tpHour3, tpMinute3};
         
         FutureProximityAdjuster futureAdjuster = new FutureProximityAdjuster(timePoints);
         
@@ -74,6 +75,8 @@ public class TimePointUnitTest {
         assertEquals(tpSecond2, futureAdjuster.adjust(new TimePoint(500, TimeUnit.SECOND)));
         assertEquals(tpMinute3, futureAdjuster.adjust(new TimePoint(4, TimeUnit.HOUR)));
         assertEquals(tpSecond2, futureAdjuster.adjust(new TimePoint(2, TimeUnit.MINUTE)));
+        assertEquals(tpSecond4, futureAdjuster.adjust(new TimePoint(600, TimeUnit.SECOND)));
+
         
         assertEquals(null, futureAdjuster.adjust(new TimePoint(10, TimeUnit.HOUR)));
         assertEquals(null, futureAdjuster.adjust(new TimePoint(340, TimeUnit.MINUTE)));
