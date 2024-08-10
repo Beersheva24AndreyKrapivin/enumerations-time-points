@@ -21,9 +21,6 @@ public class FutureProximityAdjuster implements TimePointAdjuster {
         // nearest to a given timePoint
         int index = binarySearchTP(timePoint);
 
-        if (index < 0) { 
-            index = -(index + 1);
-        } 
         return index < timePoints.length ? timePoints[index].convert(timePoint.getTimeUnit()): null;
 
     }
@@ -45,7 +42,7 @@ public class FutureProximityAdjuster implements TimePointAdjuster {
             middleIndex = (first + last) / 2;
         }
 
-        return -(first + 1);
+        return first;
       
 
     }
