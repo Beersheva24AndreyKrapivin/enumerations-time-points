@@ -19,15 +19,33 @@ public class FutureProximityAdjuster implements TimePointAdjuster {
         // returns a time point only in future (greater than a given time point) from
         // the field timePoints
         // nearest to a given timePoint
-        TimePoint tpFound = new PlusTimePointAdjuster(1, TimeUnit.values()[0]).adjust(timePoint);
-        int index = Arrays.binarySearch(timePoints, tpFound, Comparable::compareTo);
+        int index = binarySearchTP(timePoint);
 
-        if (index < 0 && -index <= timePoints.length) {
+        if (index < 0) { 
             index = -(index + 1);
+        } 
+        return index < timePoints.length ? timePoints[index].convert(timePoint.getTimeUnit()): null;
+
+    }
+
+    private int binarySearchTP(TimePoint key) {
+
+        int first = 0;
+        int last = timePoints.length - 1;
+        int middleIndex = (first + last) / 2;
+        int compInt = 0;
+
+        while (first <= last) {
+            compInt = timePoints[middleIndex].compareTo(key);
+            if (compInt <= 0) {
+                first = middleIndex + 1;
+            } else {
+                last = middleIndex - 1;
+            }
+            middleIndex = (first + last) / 2;
         }
 
-        return index < 0 ? null : timePoints[index];
-
+        return first > last ? -(first + 1) : middleIndex;
 
     }
 
